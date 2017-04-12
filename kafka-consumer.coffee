@@ -8,19 +8,23 @@ cfg =
     autoCommit: off
     groupId: "kaka-node-group" # 每个 consumer 应该使用不同的 groupId
     fromOffset: yes # 是否从特定 offset 处开始消费, 如果逆序消费, 需要指定
-    topic: "robin-record" # topic
-    offset: 1453625 # 指定 offset, (当 fromOffset 为 true 时有效), 如果逆序消费, 需要指定
+    topic: "test" # topic
+    offset: 11 # 指定 offset, (当 fromOffset 为 true 时有效), 如果逆序消费, 需要指定
     fetchMaxBytes: 512
     reverse: true # 是否逆序消费
-    olderOffset: 1453529 # 指定逆向消费的终止 offset, 只在 reverse = true 时有效
+    olderOffset: 0 # 指定逆向消费的终止 offset, 只在 reverse = true 时有效
 
 topic_meta =
   topic: cfg.consumer.topic
   offset: cfg.consumer.offset
   partition: 0
 
-oldest_offset = 0
 client = new kafka.Client cfg.client.connectionString, cfg.client.clientId
+
+# time: -1 => 最新可用的(目前空闲的) offset, -2 => 最早的有效 offset
+# offset = new kafka.Offset client
+# offset.fetch [{topic: "robin-record", partition: 0, time: -2}], (err, data) ->
+#   console.log err, data
 
 on_message = (message) -> console.log message
 consumer = new kafka.Consumer client, [topic_meta], cfg.consumer
