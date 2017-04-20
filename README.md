@@ -28,7 +28,7 @@ topic: "robin-record"
 partition: 0
 head: 2000 # the earliest offset to consume
 tail: 2000 # the latest offset to consume
-page_size: 1000 # when fragment, to split the max page size
+page_size: 1000 # when fragment, this is the max page size
 ```
 
 ## Events
